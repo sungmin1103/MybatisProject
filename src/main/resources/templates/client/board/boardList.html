@@ -8,6 +8,30 @@
 <th:block layout:fragment="content">
     <div class="text-center"><h3>게시판 리스트</h3></div>
 
+    <div id="boardSearch" class="my-2">
+        <form id="searchForm">
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label for="search">검색조건</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select form-select-sm" id="search" name="search">
+                        <option value="b_title" th:selected="${boardList.requestDTO.search=='b_title'}">글제목</option>
+                        <option value="b_name" th:selected="${boardList.requestDTO.search=='b_name'}">작성자</option>
+                        <option value="b_content" th:selected="${boardList.requestDTO.search=='b_content'}">글내용</option>
+                    </select>
+                </div>
+                <div class="col-auto textArea">
+                    <input type="text" placeholder="검색어를 입력하세요" class="form-control form-control-sm" id="keyword" name="keyword" th:value="${boardList.requestDTO.keyword}" />
+                </div>
+                <div class="col-auto">
+                    <button type="button" id="searchBtn" class="btn btn-primary btn-sm">Search</button>
+                    <button type="button" id="allSearchBtn" class="btn btn-primary btn-sm">All Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <div class="board-table-height">
         <table class="table table-bordered table-hover">
             <thead>
@@ -26,7 +50,8 @@
             </tr>
             <!--/* Strings 객체의 유틸리티 메서드는 #strings다. ex) ${#strings.method(strings)} */-->
             <th:block th:if="${not #strings.isEmpty(boardList)}">
-                <tr class="text-center" th:each="board : ${boardList}" th:object="${board}" th:data-num="*{boardNumber}">
+                <!--tr class="text-center" th:each="board : ${boardList}" th:object="${board}" th:data-num="*{boardNumber}">-->
+                <tr class="text-center" th:each="board : ${boardList.list}" th:object="${board}" th:data-num="*{boardNumber}">
                     <td th:text="*{boardNumber}"></td>
                     <td class="goDetail" th:text="*{boardTitle}"></td>
                     <td class="name" th:text="*{boardName}"></td>
